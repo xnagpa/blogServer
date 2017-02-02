@@ -15,6 +15,10 @@ application.get('/posts/:entry_id', function(req, res){
    res.json(entries[req.params.entry_id]);
 });
 
+application.get('/posts/pages/:page', function(req, res){
+   res.json(entries.slice(req.params.page-1, 2));
+});
+
 application.listen(3001, function() {
   console.log('Server started on 3001 ');
 });
