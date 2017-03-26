@@ -13,6 +13,13 @@ application.get('/', function(req, res){
    res.json(entries);
 });
 
+// это для случая когда у меня лайкают пост в списке постов
+// а как поступить, когда у меня лайкают 1 пост на странице поста?
+application.put('/posts/:entry_id/likes', function(req, res){
+   entries[req.params.entry_id].likes++;
+   res.json(entries);
+});
+
 application.get('/posts/:entry_id', function(req, res){
    res.json(entries[req.params.entry_id]);
 });
