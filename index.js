@@ -5,27 +5,39 @@ var cors = require('cors');
 
 var entries = require('./data').entries;
 
-const per_page = 2;
+const perPage = 2;
 
 application.use(cors());
 
 application.get('/', function(req, res){
-   res.json(entries);
+   var page = parseInt(req.query['page']) || 1;
+   res.json({
+     pagination:{
+       page: req.query['page'] || 1,
+       perPage: perPage,
+       totalCount: entries.length
+     },
+     entries: entries.slice((page-1)*perPage, page*perPage) || []
+   }
+   );
 });
 
-// это для случая когда у меня лайкают пост в списке постов
-// а как поступить, когда у меня лайкают 1 пост на странице поста?
 application.put('/posts/:entry_id/likes', function(req, res){
    entries[req.params.entry_id].likes++;
-   res.json(entries);
+   res.json({
+     entry: entries[req.params.entry_id] || null,
+     entries: entries || []
+   });
 });
 
 application.get('/posts/:entry_id', function(req, res){
-   res.json(entries[req.params.entry_id]);
-});
+   var entry = entries[req.params.entry_id];
+   if (entry == undefined){
+     res.status(404).send('Not found');
+   } else {
+     res.json(entries[req.params.entry_id]);
+   }
 
-application.get('/posts/pages/:page', function(req, res){
-   res.json(entries.slice((req.params.page-1)*per_page, (req.params.page)*per_page));
 });
 
 application.listen(3001, function() {
