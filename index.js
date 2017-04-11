@@ -1,4 +1,5 @@
 var express = require('express');
+var _ = require('lodash');
 var application = express();
 
 var cors = require('cors');
@@ -22,11 +23,14 @@ application.get('/', function(req, res){
    );
 });
 
+
 application.put('/posts/:entry_id/likes', function(req, res){
    entries[req.params.entry_id].likes++;
+   var response = _.map(entries, function(entry){
+                      return _.pick(entry, ['id', 'likes'])
+                  }) || []
    res.json({
-     entry: entries[req.params.entry_id] || null,
-     entries: entries || []
+     entries: response
    });
 });
 
