@@ -21,7 +21,8 @@ module.exports = {
         alt: 'Finn and Jake'
       },
       text: 'Time for adventure!',
-      likes: 60
+      likes: 60,
+      totalCount: 3
     },
     {
       id: 1,
@@ -44,7 +45,8 @@ module.exports = {
         alt: 'Finn and Jake'
       },
       text: 'Explore the dungeon!',
-      likes: 45
+      likes: 45,
+      totalCount: 3
     },
     {
       id: 2,
@@ -67,7 +69,8 @@ module.exports = {
         alt: 'Finn and Jake'
       },
       text: 'Save princesses',
-      likes: 30
+      likes: 30,
+      totalCount: 3
     },
   ]
 };
