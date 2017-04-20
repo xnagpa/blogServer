@@ -10,6 +10,9 @@ const perPage = 2;
 
 application.use(cors());
 
+var bodyParser = require('body-parser')
+application.use( bodyParser.json() );
+
 application.get('/', function(req, res){
    var page = parseInt(req.query['page']) || 1;
    res.json({
@@ -24,14 +27,15 @@ application.get('/', function(req, res){
 });
 
 
-application.put('/posts/:entry_id/likes', function(req, res){
-   entries[req.params.entry_id].likes++;
-   var response = _.map(entries, function(entry){
-                      return _.pick(entry, ['id', 'likes'])
-                  }) || []
+application.put('/posts/:entry_id/edit', function(req, res){
+   console.log(req.body);
    res.json({
-     entries: response
+     entry: {}
    });
+});
+
+application.get('/posts/:entry_id', function(req, res){
+   res.json(entries[req.params.entry_id]);
 });
 
 application.get('/posts/:entry_id', function(req, res){
