@@ -9,8 +9,18 @@ const per_page = 2;
 
 application.use(cors());
 
+var bodyParser = require('body-parser')
+application.use( bodyParser.json() );
+
 application.get('/', function(req, res){
    res.json(entries);
+});
+
+application.put('/posts/:entry_id/edit', function(req, res){
+   console.log(req.body);
+   res.json({
+     entry: {}
+   });
 });
 
 application.get('/posts/:entry_id', function(req, res){
