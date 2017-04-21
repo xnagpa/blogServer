@@ -72,5 +72,31 @@ module.exports = {
       likes: 30,
       totalCount: 3
     },
+  ],
+  comments: [
+    {
+      id: 1,
+      entry_id: 0,
+      text: "This sucks",
+      phone: "8-910-888-91-91"
+    },
+    {
+      id: 2,
+      entry_id: 0,
+      text: "Finn you're freaking gigolo!!!",
+      phone: "8-910-111-91-91"
+    },
+    {
+      id: 3,
+      entry_id: 0,
+      text: "You suck!",
+      phone: "8-910-222-91-91"
+    },
+    {
+      id: 4,
+      entry_id: 0,
+      text: "This sucks",
+      phone: "8-910-000-91-91"
+    },
   ]
 };

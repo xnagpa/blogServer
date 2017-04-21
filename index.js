@@ -5,10 +5,14 @@ var application = express();
 var cors = require('cors');
 
 var entries = require('./data').entries;
+var comments = require('./data').comments;
+
+var bodyParser = require('body-parser');
 
 const perPage = 2;
 
 application.use(cors());
+application.use(bodyParser.json());
 
 application.get('/', function(req, res){
    var page = parseInt(req.query['page']) || 1;
@@ -34,6 +38,15 @@ application.put('/posts/:entry_id/likes', function(req, res){
    });
 });
 
+application.put('/posts/:entry_id/edit', function(req, res){
+   var response = req.body;
+   var post = entries[req.params.entry_id];
+   post.text = response.text;
+   post.meta.createdAt = response.createdAt;
+   post.meta.author.name = response.authorName;
+   res.json(post);
+});
+
 application.get('/posts/:entry_id', function(req, res){
    var entry = entries[req.params.entry_id];
    if (entry == undefined){
@@ -42,6 +55,18 @@ application.get('/posts/:entry_id', function(req, res){
      res.json(entries[req.params.entry_id]);
    }
 
+});
+
+application.get('/posts/:entry_id/comments/', function(req,res){
+  console.log(comments);
+  res.json(comments);
+});
+
+application.post('/posts/:entry_id/comments/', function(req,res){
+  var new_comment = req.body;
+  console.log(`NEW COMMENT: ${new_comment}`);
+  comments.push(new_comment);
+  res.json(comments);
 });
 
 application.listen(3001, function() {
