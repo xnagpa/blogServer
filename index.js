@@ -5,10 +5,14 @@ var application = express();
 var cors = require('cors');
 
 var entries = require('./data').entries;
+var comments = require('./data').comments;
+
+var bodyParser = require('body-parser');
 
 const perPage = 2;
 
 application.use(cors());
+application.use(bodyParser.json());
 
 var bodyParser = require('body-parser')
 application.use( bodyParser.json() );
@@ -46,6 +50,27 @@ application.get('/posts/:entry_id', function(req, res){
      res.json(entries[req.params.entry_id]);
    }
 
+});
+
+application.put('/posts/:entry_id/edit', function(req, res){
+   var response = req.body;
+   var post = entries[req.params.entry_id];
+   post.text = response.text;
+   post.meta.createdAt = response.createdAt;
+   post.meta.author.name = response.authorName;
+   res.json(post);
+});
+
+application.get('/posts/:entry_id/comments/', function(req,res){
+  console.log(comments);
+  res.json(comments);
+});
+
+application.post('/posts/:entry_id/comments/', function(req,res){
+  var new_comment = req.body;
+  console.log(`NEW COMMENT: ${new_comment}`);
+  comments.push(new_comment);
+  res.json(comments);
 });
 
 application.listen(3001, function() {
